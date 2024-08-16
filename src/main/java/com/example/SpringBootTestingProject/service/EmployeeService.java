@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -38,6 +39,8 @@ public class EmployeeService {
 
     public List<Employee> getEmployeeByName(String name) {
         List<Employee> employees = employeeRepo.findByName(name);
-        return employees;
+        return employeeRepo.findAll().stream()
+                .filter(e -> name.equals(e.getName()))
+                .collect(Collectors.toList());
     }
 }
